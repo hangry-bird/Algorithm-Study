@@ -1,1 +1,28 @@
-test
+function solution(id_list, report, k) {
+    const result_list = {};
+    const report_list = {};
+
+    id_list.map(item => result_list[item] = 0)
+    id_list.map(item => report_list[item] = [])
+        
+    for(rep of report){
+        const reporter = rep.split(' ')[0]
+        const attacker = rep.split(' ')[1]
+        
+        if(report_list[attacker].findIndex(v => v === reporter) < 0){
+            report_list[attacker].push(reporter)            
+        }
+    }
+    
+    const send_mail_id_list = Object.keys(report_list).filter(item => {
+        return k <= report_list[item].length ? report_list[item].length : 0
+    })
+    
+    for(id of send_mail_id_list){
+        for(main of report_list[id]){
+            ++result_list[main]
+        }
+    }
+
+    return Object.values(result_list);
+}
