@@ -1,0 +1,28 @@
+function solution(progresses, speeds) {
+    const to_days = [];
+
+    for(var i = 0; i < progresses.length; i++){
+        let count = 0;
+        let sum = progresses[i];
+        
+        while(100 > sum){
+            sum += speeds[i];
+            ++count;
+        }
+        to_days.push(count);
+    }
+
+    const answer = [];
+    let prev_day = 0;
+    
+    for(var i=0; i< to_days.length; i++){
+        if(prev_day < to_days[i]){
+            answer.push(1)
+            prev_day = to_days[i]
+        }
+        else{
+            ++answer[answer.length - 1]
+        }
+    }
+    return answer;
+}
