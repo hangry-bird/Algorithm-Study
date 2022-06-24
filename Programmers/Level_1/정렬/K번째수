@@ -1,0 +1,6 @@
+function solution(array, commands) {
+    return commands.map(item => {
+        const slice_array = array.slice(item[0] - 1 ,item[1]).sort((a, b) => a - b);
+        return parseInt(slice_array.slice(item[2] - 1, item[2]))
+    })
+}
