@@ -1,0 +1,5 @@
+function solution(n) {
+    return new Array(n).fill(undefined).map((obj, index) => {
+        return index % 2 === 0 ? "수" : "박"
+    }).join("");
+}
