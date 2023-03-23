@@ -1,0 +1,39 @@
+/**
+* 1. 본인이 여벌 체육복이 있지만 도난 당한 경우 부터 제거
+* 2. 앞 번호부터 순서대로 빌려주기 위해 정렬
+* 3. 순서대로 빌려주고 빌려주면 배열에서 없애기
+*/
+function solution(n, lost, reserve) {
+    
+    /** 여벌 체육복이 있지만 도난 당한 경우 작업에서 제거 */
+    lost = lost.filter(lostNum => {
+        const index = reserve.indexOf(lostNum)
+        if(index >= 0){
+            reserve.splice(index, 1);
+            return false;
+        }
+        return true;
+    })
+    
+    /** 앞 번호부터 순서대로 빌려주기 위해 정렬 */
+    lost = lost.sort();
+    reserve = reserve.sort();
+    
+    /** 순서대로 빌려주고 제거 */
+    lost = lost.filter(lostNum => {
+        for(let j = 0; j < reserve.length; j++){
+            const prevNum = lostNum - 1;
+            const nextNum = lostNum + 1;
+
+            if(reserve[j] === prevNum || reserve[j] === nextNum){
+                reserve.splice(j, 1);
+                return false;
+            }
+        }
+        return true;
+    })
+
+    const answer = n - lost.length;   
+
+    return answer;
+}
