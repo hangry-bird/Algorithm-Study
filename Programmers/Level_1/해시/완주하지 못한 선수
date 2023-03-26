@@ -1,0 +1,17 @@
+function solution(participant, completion) {
+    const map = new Map();
+    
+    for(let name of participant){
+        map.set(name, map.get(name) ? map.get(name) + 1 : 1)
+    }
+    
+    for(let name of completion){
+        map.set(name, map.get(name) - 1)
+    }
+    
+    for (let item of map) {
+        if(item[1]){
+            return item[0]
+        }
+    }
+}
