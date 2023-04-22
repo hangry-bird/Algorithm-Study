@@ -1,0 +1,28 @@
+function solution(board, moves) {
+    let answer = 0;
+    
+    const bucket = [];
+
+    const putDollBucket = (i, j) => {
+        if(bucket[bucket.length - 1] === board[i][j]){
+            bucket.pop()
+            answer += 2
+        }
+        else{
+            bucket.push(board[i][j]);
+        }
+        board[i][j] = 0;
+    }
+    
+    for(let i=0; i < moves.length; i++){
+        const column = moves[i] - 1;
+        for(let j=0; j < board.length; j++){
+            if(board[j][column]){
+                putDollBucket(j, column);
+                break;
+            }
+        }
+    }
+    
+    return answer;
+}
