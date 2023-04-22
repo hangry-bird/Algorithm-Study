@@ -1,0 +1,38 @@
+function solution(survey, choices) {
+    const points = {
+        "R": 0, "T": 0,
+        "C": 0, "F": 0,
+        "J": 0, "M": 0,
+        "A": 0, "N": 0
+    }
+    
+    for(let i=0; i<survey.length; i++){
+        const splitSurvey = survey[i].split('');
+        const [firstType, secondType] = splitSurvey;
+
+        const choice = choices[i];
+        if(choice < 4){
+            switch(choice){
+                case 1: points[firstType] += 3;break;
+                case 2: points[firstType] += 2;break;
+                case 3: points[firstType] += 1;break;
+            }
+        }
+        else if(choice > 4){
+            switch(choice){
+                case 5: points[secondType] += 1;break;
+                case 6: points[secondType] += 2;break;
+                case 7: points[secondType] += 3;break;
+            }
+        }
+    }
+
+    let answer = "";
+
+    answer += points["R"] >= points["T"] ? "R" : "T"
+    answer += points["C"] >= points["F"] ? "C" : "F"
+    answer += points["J"] >= points["M"] ? "J" : "M"
+    answer += points["A"] >= points["N"] ? "A" : "N"
+
+    return answer;
+}
