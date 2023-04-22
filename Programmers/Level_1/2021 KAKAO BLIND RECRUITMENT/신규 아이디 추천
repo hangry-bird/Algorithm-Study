@@ -1,0 +1,25 @@
+const replaceFirstRegex = (id) => id.toLowerCase();
+const replaceSecondRegex = (id) => id.replace(/[^a-z0-9-_.]/g, "");
+const replaceThirdRegex = (id) => id.replace(/\.{2,}/g, ".");
+const replaceForthRegex = (id) => id.replace(/^\.+|\.+$/g, "");
+const replaceFifthRegex = (id) => id ? id : "a";
+const replaceSixthRegex = (id) => id.replace(/^([\s\S]{15}).*/, '$1').replace(/\.$/, '');
+const replaceSeventhRegex = (id) => id.length <= 2 ? id + id.slice(-1).repeat(3 - id.length) : id;
+
+function solution(new_id) {
+    const Regexs = [
+        replaceFirstRegex, 
+        replaceSecondRegex,
+        replaceThirdRegex,
+        replaceForthRegex,
+        replaceFifthRegex,
+        replaceSixthRegex,
+        replaceSeventhRegex,
+    ];
+
+    const answer = Regexs.reduce((prevResult, func) => {
+      return func(prevResult);
+    }, new_id);
+
+    return answer;
+}
