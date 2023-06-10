@@ -1,0 +1,59 @@
+function generatePatternArray(arr) {
+    const generateCombinations = (source, length) => {
+        if (length === 1) {
+            return source.map((item) => [item]);
+        }
+
+        return source.flatMap((item, index) => generateCombinations(source.slice(index + 1), length - 1).map((combination) => [item, ...combination]));
+    };
+
+    return Array.from({ length: arr.length }, (_, length) => generateCombinations(arr, length + 1)).flat();
+}
+
+const uniquenessVerification = (relation, patternArray) => {
+    const uniquenessArray = [];
+    for(let i = 0; i < patternArray.length; i++){
+        const set = new Set();
+        relation.forEach(rel => {
+            const candidateKeyString = patternArray[i].map(pattern => rel[pattern]).join('');
+            set.add(candidateKeyString)
+        })
+        if(relation.length === set.size){
+            uniquenessArray.push(patternArray[i])
+        }
+    }
+    return uniquenessArray;
+}
+
+const minimalityVerification = (uniquenessArray) => {
+    const result = [];
+    
+    while(uniquenessArray.length){
+        result.push(uniquenessArray[0])
+
+        uniquenessArray = uniquenessArray.reduce((acc, cur) => {
+            const isMinimal = uniquenessArray[0].every(uniquenessKey => cur.includes(uniquenessKey));
+            if(isMinimal === false){
+                acc.push(cur);                 
+            }
+            return acc;
+        },[])
+    }
+    return result;
+}
+
+function solution(relation) {
+    var answer = 0;
+    
+    const columnArray = Array.from({ length: relation[0].length }).map((_, index) => index);
+    const patternArray = generatePatternArray(columnArray);
+    
+    // 유일성 검증
+    const uniquenessArray = uniquenessVerification(relation, patternArray)
+    // 최소성 검증
+    const minimalityArray = minimalityVerification(uniquenessArray)
+    
+    answer = minimalityArray.length;
+
+    return answer;
+}
